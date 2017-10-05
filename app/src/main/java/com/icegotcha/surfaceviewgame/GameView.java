@@ -15,45 +15,37 @@ import android.view.SurfaceView;
 public class GameView extends SurfaceView implements Runnable {
 
     private static final String TAG = "Game";
+
     Enemy[] enemies;
     int enemyCount = 5;
+    float enemyDivideFactor = 5.2f;
     Box[] boxes;
     int boxCount = 2;
+    float boxDivideFactor = 4.0f;
+
     private Thread gameThread = null;
     private volatile boolean playing;
     private SurfaceHolder surfaceHolder;
     private Canvas canvas;
     private Paint paint;
-    private int screenW;
-    private int screenH;
+
     // This variable track the game frame rate
-    private long fps = (long) 2.0; // dummy (normal should be > 30)
-    // Help calculate the fps
-    private long timeThisFrame;
+    //private long fps = (long) 2.0; // dummy (normal should be > 30)
 
     public GameView(Context context) {
         super(context);
-    }
-
-    public GameView(Context context, int screenW, int screenH) {
-        super(context);
-        this.screenW = screenW;
-        this.screenH = screenH;
 
         surfaceHolder = getHolder();
         paint = new Paint();
 
-        playing = true;
-
         enemies = new Enemy[enemyCount];
         for (int i = 0; i < enemyCount; i++) {
-            enemies[i] = new Enemy(context, screenW, screenH, i);
-            // context คือสภาพ ณ ปัจจุบันที่เรียกใช้
+            enemies[i] = new Enemy(context, enemyDivideFactor, i);
         }
 
         boxes = new Box[boxCount];
-        boxes[0] = new Box(context, screenW, screenH, false, 0);
-        boxes[1] = new Box(context, screenW, screenH, true, 1);
+        boxes[0] = new Box(context, true, boxDivideFactor, 0);
+        boxes[1] = new Box(context, false, boxDivideFactor, 1);
     }
 
     @Override
@@ -69,10 +61,10 @@ public class GameView extends SurfaceView implements Runnable {
             // Draw the frame
             draw();
 
-            timeThisFrame = System.currentTimeMillis() - startFrameTime;
-            if (timeThisFrame > 0) {
-                fps = 1000 / 6 / timeThisFrame;
-            }
+            //long timeThisFrame = System.currentTimeMillis() - startFrameTime;
+            //if (timeThisFrame > 0) {
+            //    fps = 1000 / 6 / timeThisFrame;
+            //}
 
             control();
         }
@@ -100,8 +92,8 @@ public class GameView extends SurfaceView implements Runnable {
 
             paint.setColor(Color.argb(255, 249, 129, 0));
 
-            paint.setTextSize(30);
-            canvas.drawText("FPS :" + fps, 20, 40, paint);
+            //paint.setTextSize(30);
+            //canvas.drawText("FPS :" + fps, 20, 40, paint);
 
             // draw enemies
             for (int i = 0; i < enemyCount; i++) {

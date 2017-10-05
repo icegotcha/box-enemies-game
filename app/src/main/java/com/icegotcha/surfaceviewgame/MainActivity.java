@@ -15,15 +15,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
 
-        Display display = getWindowManager().getDefaultDisplay();
+        //Display display = getWindowManager().getDefaultDisplay();
 
         // Get the screen resolution into point object
-        Point size = new Point();
-        display.getSize(size);
-
-        gameView = new GameView(this, size.x, size.y);
-        Log.d("Screen", "Size X:" + size.x + ", Y:" + size.y);
-
+        //Point size = new Point();
+        //display.getSize(size);
+        //Log.d("Screen", "Size X:" + size.x + ", Y:" + size.y);
+        
+        gameView = new GameView(this);
         setContentView(gameView);
 
     }

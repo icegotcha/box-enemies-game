@@ -1,56 +1,40 @@
 package com.icegotcha.surfaceviewgame;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 
 /**
  * Created by icegotcha on 26/9/2560.
  */
 
 public class Box extends BitmapDraw {
-    private static final String TAG = "Box";
 
-    private boolean left;
+    private boolean isGoRight;
 
-    public Box(int screenW, int screenH, int i) {
-        super(screenW, screenH, i);
-    }
-
-    public Box(Context context, int screenW, int screenH, boolean left, int i) {
-        this(screenW, screenH, i);
-        this.left = left;
-
-        initialBitmap(context);
-    }
-
-    @Override
-    protected void initialBitmap(Context context) {
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.packing);
-        icon_width_divide_factor = 4f;
-        resizeBitmap(context);
-        setStartPosition();
+    public Box(Context context, boolean isGoRight, float iconWidthDivideFactor, int id) {
+        super(context, R.drawable.packing, iconWidthDivideFactor, id);
+        this.isGoRight = isGoRight;
     }
 
     @Override
     public void setStartPosition() {
-        if (left) {
-            x = bitmap.getWidth();
+        if (isGoRight) {
+            x = 0;
         } else {
             x = maxX - bitmap.getWidth();
         }
-        y = maxY - bitmap.getHeight() - 500;
+        y = maxY - bitmap.getHeight() - 250;
     }
 
     public void update(int playerSpeed) {
-        if (left) {
+        if (isGoRight) {
             x += playerSpeed;
             if (x > maxX - bitmap.getWidth()) {
-                left = false;
+                isGoRight = false;
             }
         } else {
             x -= playerSpeed;
             if (x < 0) {
-                left = true;
+                isGoRight = true;
             }
         }
     }

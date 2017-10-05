@@ -1,8 +1,6 @@
 package com.icegotcha.surfaceviewgame;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
-
 import java.util.Random;
 
 /**
@@ -10,34 +8,19 @@ import java.util.Random;
  */
 
 public class Enemy extends BitmapDraw {
-    private static final String TAG = "Enemy";
 
-    public Enemy(int screenW, int screenH, int i) {
-        super(screenW, screenH, i);
-    }
-
-    public Enemy(Context context, int screenW, int screenH, int i) {
-        this(screenW, screenH, i);
-        initialBitmap(context);
-    }
-
-    @Override
-    protected void initialBitmap(Context context) {
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.pig);
-        icon_width_divide_factor = 5.2f;
-        resizeBitmap(context);
-        setStartPosition();
+    public Enemy(Context context, float iconWidthDivideFactor, int id) {
+        super(context, R.drawable.pig, iconWidthDivideFactor, id);
     }
 
     @Override
     public void setStartPosition() {
         Random rand = new Random();
         x = rand.nextInt(maxX - bitmap.getWidth());
-        //x = 100;
         y = rand.nextInt(maxY);
-        //y = 0;
     }
 
+    @Override
     public void update(int playerSpeed) {
         Random rand = new Random();
         y += playerSpeed;
